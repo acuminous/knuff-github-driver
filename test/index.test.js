@@ -61,7 +61,7 @@ describe('driver', () => {
   }
 
   function getReminderId(t) {
-    return process.env.MATRIX_NODE_VERSION ? `${process.env.MATRIX_NODE_VERSION} ${reminderId}` : reminderId;
+    return process.env.MATRIX_NODE_VERSION ? `${process.env.MATRIX_NODE_VERSION} ${t.name}` : t.name;
   }
 
   async function listOpenIssues() {
