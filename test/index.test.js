@@ -5,7 +5,7 @@ import GitHubDriver from '../index.js';
 
 const { describe, it, beforeEach, after } = zunit;
 
-describe('knuff-github-driver', () => {
+describe('driver', () => {
 
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   const driver = new GitHubDriver(octokit);
