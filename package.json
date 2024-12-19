@@ -9,7 +9,7 @@
     "lint-staged": "lint-staged",
     "test": "zUnit",
     "coverage": "nyc --report html --reporter lcov --reporter text-summary zUnit",
-    "prepare": "husky install"
+    "prepare": "husky init"
   },
   "author": "Stephen Cresswell",
   "license": "ISC",
