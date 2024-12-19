@@ -1,5 +1,3 @@
-import { Octokit } from '@octokit/rest';
-
 export default class GitHubDriver {
 
   #octokit;
