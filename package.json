@@ -1,9 +1,20 @@
 {
   "name": "@acuminous/knuff-github-driver",
   "version": "1.0.0",
-  "description": "A GitHub Driver for Knuff",
+  "description": "A GitHub driver for Knuff",
   "main": "index.js",
   "type": "module",
+  "license": "ISC",
+  "author": "Stephen Cresswell",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "knuff",
+    "github",
+    "driver",
+    "reminders"
+  ],
   "scripts": {
     "lint": "eslint .",
     "lint-staged": "lint-staged",
@@ -11,8 +22,6 @@
     "coverage": "nyc --report html --reporter lcov --reporter text-summary zUnit",
     "prepare": "husky"
   },
-  "author": "Stephen Cresswell",
-  "license": "ISC",
   "devDependencies": {
     "@octokit/auth-token": "^5.1.1",
     "@octokit/rest": "^21.0.2",
@@ -30,12 +39,6 @@
     "type": "git",
     "url": "git+ssh://git@github.com/acuminous/knuff-github-driver.git"
   },
-  "keywords": [
-    "knuff",
-    "github",
-    "driver",
-    "reminders"
-  ],
   "bugs": {
     "url": "https://github.com/acuminous/knuff-github-driver/issues"
   },
