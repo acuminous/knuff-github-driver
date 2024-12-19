@@ -1,0 +1,27 @@
+{
+  "name": "knuff-github-driver",
+  "version": "1.0.0",
+  "description": "A GitHub Driver for Knuff",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "lint-staged": "lint-staged",
+    "test": "zUnit",
+    "coverage": "nyc --report html --reporter lcov --reporter text-summary zUnit",
+    "prepare": "husky install"
+  },
+  "author": "Stephen Cresswell",
+  "license": "ISC",
+  "devDependencies": {
+    "@octokit/auth-token": "^5.1.1",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "nyc": "^17.1.0",
+    "zunit": "^4.0.2"
+  },
+  "dependencies": {
+    "@octokit/rest": "^21.0.2"
+  }
+}
