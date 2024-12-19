@@ -1,16 +1,15 @@
-const { Octokit } = require('@octokit/rest');
+import { Octokit } from '@octokit/rest';
 
-class GitHubDriver {
+export default class GitHubDriver {
 
-  #authStrategy;
   #octokit;
 
-  constructor(authStrategy) {
-    this.#authStrategy = authStrategy;
-    this.#octokit = new Octokit({ authStrategy });
+  constructor(octokit) {
+    this.#octokit = octokit;
   }
 
   async findIssue(repository, reminderId) {
+
     const { organisation, name } = repository;
     const issues = await this.#octokit.issues.listForRepo({
       owner: organisation,
@@ -24,8 +23,8 @@ class GitHubDriver {
 
   async createIssue(repository, reminderId, issue) {
     const { organisation, name } = repository;
-    const { title, body, labels } = issue;
-    await this.#octokit.issues.create({
+    const { title, body, labels = [] } = issue;
+    return this.#octokit.issues.create({
       owner: organisation,
       repo: name,
       title,
@@ -34,5 +33,3 @@ class GitHubDriver {
     });
   }
 }
-
-module.exports = GitHubDriver;

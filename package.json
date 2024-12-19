@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A GitHub Driver for Knuff",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "lint": "eslint .",
     "lint-staged": "lint-staged",
