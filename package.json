@@ -9,7 +9,7 @@
     "lint-staged": "lint-staged",
     "test": "zUnit",
     "coverage": "nyc --report html --reporter lcov --reporter text-summary zUnit",
-    "prepare": "husky init"
+    "prepare": "husky"
   },
   "author": "Stephen Cresswell",
   "license": "ISC",
@@ -22,5 +22,22 @@
     "lint-staged": "^15.2.11",
     "nyc": "^17.1.0",
     "zunit": "^4.0.2"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/acuminous/knuff-github-driver.git"
+  },
+  "keywords": [
+    "knuff",
+    "github",
+    "driver",
+    "reminders"
+  ],
+  "bugs": {
+    "url": "https://github.com/acuminous/knuff-github-driver/issues"
+  },
+  "homepage": "https://github.com/acuminous/knuff-github-driver#readme"
 }
