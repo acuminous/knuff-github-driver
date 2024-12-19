@@ -17,7 +17,8 @@ jobs:
       - run: npm run lint
       - run: npm test
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}      
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          MATRIX_NODE_VERSION: ${{ matrix.node-version }}
 
   code-climate:
     needs: build
@@ -32,6 +33,9 @@ jobs:
       - run: chmod +x ./cc-test-reporter
       - run: ./cc-test-reporter before-build
       - run: npm run coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          MATRIX_NODE_VERSION: ${{ matrix.node-version }}
       - run: ./cc-test-reporter format-coverage -t lcov coverage/lcov.info
       - run: ./cc-test-reporter upload-coverage
         env:

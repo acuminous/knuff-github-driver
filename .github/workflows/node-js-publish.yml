@@ -15,6 +15,9 @@ jobs:
       - run: npm ci
       - run: npm run lint     
       - run: npm test
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          MATRIX_NODE_VERSION: ${{ matrix.node-version }}
 
   publish-npm:
     needs: build

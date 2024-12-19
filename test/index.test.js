@@ -20,31 +20,36 @@ describe('driver', () => {
 
   it('should create issues', async (t) => {
     const repository = { organisation: 'acuminous', name: 'knuff-github-driver' };
-    const { data: issue } = await driver.createIssue(repository, t.name, { title: 'test-issue-1', body: 'the body' });
+    const reminderId = getReminderId(t);
+
+    const { data: issue } = await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });
+
     ok(issue.number);
   });
 
   it('should find all matching issues', async (t) => {
     const repository = { organisation: 'acuminous', name: 'knuff-github-driver' };
+    const reminderId = getReminderId(t);
 
-    await driver.createIssue(repository, t.name, { title: 'test-issue-1', body: 'the body' });
-    await driver.createIssue(repository, t.name, { title: 'test-issue-2', body: 'the body' });
+    await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });
+    await driver.createIssue(repository, reminderId, { title: 'test-issue-2', body: 'the body' });
     await driver.createIssue(repository, 'other', { title: 'test-issue-3', body: 'the body' });
 
-    const issues = await driver.findIssue(repository, t.name);
+    const issues = await driver.findIssue(repository, reminderId);
     eq(issues.length, 2);
   });
 
   it('should not find closed issues', async (t) => {
     const repository = { organisation: 'acuminous', name: 'knuff-github-driver' };
+    const reminderId = getReminderId(t);
 
-    const { data: issue1 } = await driver.createIssue(repository, t.name, { title: 'test-issue-1', body: 'the body' });
-    await driver.createIssue(repository, t.name, { title: 'test-issue-2', body: 'the body' });
-    await driver.createIssue(repository, t.name, { title: 'test-issue-3', body: 'the body' });
+    const { data: issue1 } = await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });
+    await driver.createIssue(repository, reminderId, { title: 'test-issue-2', body: 'the body' });
+    await driver.createIssue(repository, reminderId, { title: 'test-issue-3', body: 'the body' });
 
     await closeIssue(issue1.number);
 
-    const issues = await driver.findIssue(repository, t.name);
+    const issues = await driver.findIssue(repository, reminderId);
     eq(issues.length, 2);
   });
 
@@ -53,6 +58,10 @@ describe('driver', () => {
     for (let i = 0; i < issues.length; i++) {
       await closeIssue(issues[i].number);
     }
+  }
+
+  function getReminderId(t) {
+    return process.env.MATRIX_NODE_VERSION ? `${process.env.MATRIX_NODE_VERSION} ${reminderId}` : reminderId;
   }
 
   async function listOpenIssues() {
