@@ -10,7 +10,7 @@ export default class GitHubDriver {
 
     const { owner, name } = repository;
     const issues = await this.#octokit.issues.listForRepo({
-      owner: owner,
+      owner,
       repo: name,
       state: 'open',
       labels: reminderId,
@@ -23,7 +23,7 @@ export default class GitHubDriver {
     const { owner, name } = repository;
     const { title, body, labels = [] } = issue;
     return this.#octokit.issues.create({
-      owner: owner,
+      owner,
       repo: name,
       title,
       body,
