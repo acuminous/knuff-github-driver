@@ -2,6 +2,11 @@
 
 A GitHub driver for [Knuff](https://www.npmjs.com/package/@acuminous/knuff)
 
+## Installation
+```
+npm i @acuminous/knuff-github-driver
+```
+
 ## Usage
 ```js
 import { Octokit } from '@octokit/rest';
