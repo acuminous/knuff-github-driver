@@ -1,6 +1,6 @@
 {
   "name": "@acuminous/knuff-github-driver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A GitHub driver for Knuff",
   "main": "index.js",
   "type": "module",
