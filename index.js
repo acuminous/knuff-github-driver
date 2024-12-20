@@ -8,9 +8,9 @@ export default class GitHubDriver {
 
   async findIssue(repository, reminderId) {
 
-    const { organisation, name } = repository;
+    const { owner, name } = repository;
     const issues = await this.#octokit.issues.listForRepo({
-      owner: organisation,
+      owner: owner,
       repo: name,
       state: 'open',
       labels: reminderId,
@@ -20,10 +20,10 @@ export default class GitHubDriver {
   }
 
   async createIssue(repository, reminderId, issue) {
-    const { organisation, name } = repository;
+    const { owner, name } = repository;
     const { title, body, labels = [] } = issue;
     return this.#octokit.issues.create({
-      owner: organisation,
+      owner: owner,
       repo: name,
       title,
       body,

@@ -19,7 +19,7 @@ describe('driver', () => {
   });
 
   it('should create issues', async (t) => {
-    const repository = { organisation: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminderId = getReminderId(t);
 
     const { data: issue } = await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });
@@ -28,7 +28,7 @@ describe('driver', () => {
   });
 
   it('should find all matching issues', async (t) => {
-    const repository = { organisation: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminderId = getReminderId(t);
 
     await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });
@@ -40,7 +40,7 @@ describe('driver', () => {
   });
 
   it('should not find closed issues', async (t) => {
-    const repository = { organisation: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminderId = getReminderId(t);
 
     const { data: issue1 } = await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });

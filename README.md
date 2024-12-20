@@ -21,4 +21,4 @@ GitHub provides multiple authentication methods. The most simple is GitHub Actio
 
 If you need to post to a different repository, and your usage is still moderate, then a fine grained personal access token with read+write issue permissions is the way to go.
 
-If you are using Knuff in an organisation, and have lots of teams and repositories, then you may find you are rate limited. In this case your best option is to register a GitHub App and use an installation token, however the token acquisition and refresh process is cumbersome.
+If you are using Knuff with lots of teams and repositories, then you may find you are rate limited. In this case your best option is to register a GitHub App and use an installation token, however the token acquisition and refresh process is cumbersome.
