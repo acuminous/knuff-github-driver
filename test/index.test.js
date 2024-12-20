@@ -22,7 +22,7 @@ describe('driver', () => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminderId = getReminderId(t);
 
-    const { data: issue } = await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });
+    const { data: issue } = await driver.createReminder(repository, { id: reminderId, title: 'test-issue-1', body: 'the body' });
 
     ok(issue.number);
   });
@@ -31,11 +31,11 @@ describe('driver', () => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminderId = getReminderId(t);
 
-    await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });
-    await driver.createIssue(repository, reminderId, { title: 'test-issue-2', body: 'the body' });
-    await driver.createIssue(repository, 'other', { title: 'test-issue-3', body: 'the body' });
+    await driver.createReminder(repository, { id: reminderId, title: 'test-issue-1', body: 'the body' });
+    await driver.createReminder(repository, { id: reminderId, title: 'test-issue-2', body: 'the body' });
+    await driver.createReminder(repository, { id: 'other', title: 'test-issue-3', body: 'the body' });
 
-    const issues = await driver.findIssue(repository, reminderId);
+    const issues = await driver.findReminder(repository, reminderId);
     eq(issues.length, 2);
   });
 
@@ -43,13 +43,13 @@ describe('driver', () => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminderId = getReminderId(t);
 
-    const { data: issue1 } = await driver.createIssue(repository, reminderId, { title: 'test-issue-1', body: 'the body' });
-    await driver.createIssue(repository, reminderId, { title: 'test-issue-2', body: 'the body' });
-    await driver.createIssue(repository, reminderId, { title: 'test-issue-3', body: 'the body' });
+    const { data: issue1 } = await driver.createReminder(repository, { id: reminderId, title: 'test-issue-1', body: 'the body' });
+    await driver.createReminder(repository, { id: reminderId, title: 'test-issue-2', body: 'the body' });
+    await driver.createReminder(repository, { id: reminderId, title: 'test-issue-3', body: 'the body' });
 
     await closeIssue(issue1.number);
 
-    const issues = await driver.findIssue(repository, reminderId);
+    const issues = await driver.findReminder(repository, reminderId);
     eq(issues.length, 2);
   });
 
