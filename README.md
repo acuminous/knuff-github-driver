@@ -6,7 +6,7 @@
 [![Test Coverage](https://codeclimate.com/github/acuminous/knuff-github-driver/badges/coverage.svg)](https://codeclimate.com/github/acuminous/knuff-github-driver/coverage)
 [![Discover zUnit](https://img.shields.io/badge/Discover-zUnit-brightgreen)](https://www.npmjs.com/package/zunit)
 
-A GitHub Driver for [Knuff](https://www.npmjs.com/package/knuff-github-driver)
+A GitHub driver for [Knuff](https://www.npmjs.com/package/knuff-github-driver)
 
 ## Usage
 ```js
