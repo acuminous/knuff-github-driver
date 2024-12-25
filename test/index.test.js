@@ -35,7 +35,7 @@ describe('driver', () => {
     await driver.createReminder(repository, { id: reminderId, title: 'test-issue-2', body: 'the body' });
     await driver.createReminder(repository, { id: 'other', title: 'test-issue-3', body: 'the body' });
 
-    const issues = await driver.findReminder(repository, reminderId);
+    const issues = await driver.findReminder(repository, { id: reminderId });
     eq(issues.length, 2);
   });
 
@@ -49,7 +49,7 @@ describe('driver', () => {
 
     await closeIssue(issue1.number);
 
-    const issues = await driver.findReminder(repository, reminderId);
+    const issues = await driver.findReminder(repository, { id: reminderId });
     eq(issues.length, 2);
   });
 

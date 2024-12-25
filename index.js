@@ -6,14 +6,14 @@ export default class GitHubDriver {
     this.#octokit = octokit;
   }
 
-  async findReminder(repository, reminderId) {
+  async findReminder(repository, reminder) {
 
     const { owner, name } = repository;
     const issues = await this.#octokit.issues.listForRepo({
       owner,
       repo: name,
       state: 'open',
-      labels: reminderId,
+      labels: reminder.id,
     });
 
     return issues.data;
