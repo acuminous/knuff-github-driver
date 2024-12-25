@@ -20,36 +20,32 @@ describe('driver', () => {
 
   it('should create issues', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
-    const reminderId = getReminderId(t);
+    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' }
 
-    const { data: issue } = await driver.createReminder(repository, { id: reminderId, title: 'test-issue-1', body: 'the body' });
+    const { data: issue } = await driver.createReminder(repository, reminder);
 
     ok(issue.number);
   });
 
   it('should find matching issues', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
-    const reminderId = getReminderId(t);
+    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' }
 
-    await driver.createReminder(repository, { id: reminderId, title: 'test-issue-1', body: 'the body' });
-    await driver.createReminder(repository, { id: reminderId, title: 'test-issue-2', body: 'the body' });
-    await driver.createReminder(repository, { id: 'other', title: 'test-issue-3', body: 'the body' });
+    const { data: issue } = await driver.createReminder(repository, reminder);
 
-    const found = await driver.findReminder(repository, { id: reminderId });
+    const found = await driver.findReminder(repository, reminder);
+
     eq(found, true);
   });
 
   it('should not find closed issues', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
-    const reminderId = getReminderId(t);
+    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' }
 
-    const { data: issue1 } = await driver.createReminder(repository, { id: reminderId, title: 'test-issue-1', body: 'the body' });
-    await driver.createReminder(repository, { id: reminderId, title: 'test-issue-2', body: 'the body' });
-    await driver.createReminder(repository, { id: reminderId, title: 'test-issue-3', body: 'the body' });
+    const { data: issue } = await driver.createReminder(repository, reminder);
+    await closeIssue(issue.number);
 
-    await closeIssue(issue1.number);
-
-    const found = await driver.findReminder(repository, { id: reminderId });
+    const found = await driver.findReminder(repository, reminder);
     eq(found, false);
   });
 
