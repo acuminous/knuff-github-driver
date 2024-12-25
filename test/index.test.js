@@ -27,7 +27,7 @@ describe('driver', () => {
     ok(issue.number);
   });
 
-  it('should find all matching issues', async (t) => {
+  it('should find matching issues', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminderId = getReminderId(t);
 
@@ -35,8 +35,8 @@ describe('driver', () => {
     await driver.createReminder(repository, { id: reminderId, title: 'test-issue-2', body: 'the body' });
     await driver.createReminder(repository, { id: 'other', title: 'test-issue-3', body: 'the body' });
 
-    const issues = await driver.findReminder(repository, { id: reminderId });
-    eq(issues.length, 2);
+    const found = await driver.findReminder(repository, { id: reminderId });
+    eq(found, true);
   });
 
   it('should not find closed issues', async (t) => {
@@ -49,8 +49,8 @@ describe('driver', () => {
 
     await closeIssue(issue1.number);
 
-    const issues = await driver.findReminder(repository, { id: reminderId });
-    eq(issues.length, 2);
+    const found = await driver.findReminder(repository, { id: reminderId });
+    eq(found, false);
   });
 
   async function nuke() {

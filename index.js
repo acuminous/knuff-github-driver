@@ -16,7 +16,7 @@ export default class GitHubDriver {
       labels: reminder.id,
     });
 
-    return issues.data;
+    return issues.data.length > 0;
   }
 
   async createReminder(repository, reminder) {
