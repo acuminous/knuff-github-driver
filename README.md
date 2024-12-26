@@ -15,6 +15,8 @@ const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const driver = new GitHubDriver(octokit);
 ```
 
+The driver adds two labels, `knuff:${reminder.id}` and `knuff:${reminder.date}` to enable duplicate checking. If an open or closed issue exists with both this labels, it will not be recreated. GitHub enforces a maximum label length of 51 characters, so if the reminder has any labels (including the knuff generated ones) longer than this the driver will throw an error.
+
 ### Authentication
 GitHub provides multiple authentication methods. The most simple is GitHub Action Token authentication. When run from a GitHub Action, the GITHUB_TOKEN environment variable is automatically set, but only permits Knuff to post issues to the repository that houses the action.
 
