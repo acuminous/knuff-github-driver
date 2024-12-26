@@ -1,4 +1,5 @@
 import { ok, strictEqual as eq, rejects } from 'node:assert';
+import crypto from 'node:crypto';
 import zunit from 'zunit';
 import { Octokit } from '@octokit/rest';
 import GitHubDriver from '../index.js';
@@ -21,44 +22,73 @@ describe('driver', () => {
   it('should create issues with labels', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminder = {
-      id: 'test',
+      id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
       body: 'the body',
       labels: ['l1', 'l2'],
-      date: new Date('2024-12-25'),
+      date: new Date('2024-12-25T13:00:00Z'),
+      timezone: 'Europe/London',
     };
     const { data: issue } = await driver.createReminder(repository, reminder);
 
     ok(issue.number);
     eq(issue.title, 'should create issues with labels');
     eq(issue.labels.length, 4);
-    eq(issue.labels[0].name, 'knuff:2024-12-25');
-    eq(issue.labels[1].name, 'knuff:test');
-    eq(issue.labels[2].name, 'l1');
-    eq(issue.labels[3].name, 'l2');
+
+    const labels = issue.labels.map((l) => l.name).sort();
+    eq(labels[0], 'knuff:2024-12-25');
+    eq(labels[1], `knuff:${reminder.id}`);
+    eq(labels[2], 'l1');
+    eq(labels[3], 'l2');
   });
 
   it('should create issues without labels', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminder = {
-      id: 'test',
+      id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
       body: 'the body',
       date: new Date('2024-12-25'),
+      timezone: 'Europe/London',
     };
     const { data: issue } = await driver.createReminder(repository, reminder);
 
     ok(issue.number);
     eq(issue.title, 'should create issues without labels');
     eq(issue.labels.length, 2);
-    eq(issue.labels[0].name, 'knuff:2024-12-25');
-    eq(issue.labels[1].name, 'knuff:test');
+
+    const labels = issue.labels.map((l) => l.name).sort();
+    eq(labels[0], 'knuff:2024-12-25');
+    eq(labels[1], `knuff:${reminder.id}`);
+  });
+
+  it('should honour timezones', async (t) => {
+    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const reminder = {
+      id: `test-${crypto.randomBytes(10).toString('hex')}`,
+      title: t.name,
+      body: 'the body',
+      labels: ['l1', 'l2'],
+      date: new Date('2024-12-25T13:00:00Z'),
+      timezone: 'Australia/Sydney',
+    };
+    const { data: issue } = await driver.createReminder(repository, reminder);
+
+    ok(issue.number);
+    eq(issue.title, 'should honour timezones');
+    eq(issue.labels.length, 4);
+
+    const labels = issue.labels.map((l) => l.name).sort();
+    eq(labels[0], 'knuff:2024-12-26');
+    eq(labels[1], `knuff:${reminder.id}`);
+    eq(labels[2], 'l1');
+    eq(labels[3], 'l2');
   });
 
   it('should reject reminders with labels greater than 51 characters', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminder = {
-      id: 'test',
+      id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
       body: 'the body',
       labels: ['123456789 123456789 123456789 123456789 123456789 12'],
@@ -89,7 +119,7 @@ describe('driver', () => {
   it('should find open issues with the same id and date', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminder = {
-      id: 'test',
+      id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
       body: 'the body',
       labels: ['l1', 'l2'],
@@ -99,14 +129,13 @@ describe('driver', () => {
     await driver.createReminder(repository, reminder);
 
     const found = await driver.hasReminder(repository, reminder);
-
     eq(found, true);
   });
 
   it('should find closed issues with the same id and date', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminder = {
-      id: 'test',
+      id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
       body: 'the body',
       labels: ['l1', 'l2'],
@@ -123,11 +152,12 @@ describe('driver', () => {
   it('should ignore issues with the same id but different day', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminder = {
-      id: 'test',
+      id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
       body: 'the body',
       labels: ['l1', 'l2'],
       date: new Date('2024-12-25'),
+      timezone: 'Europe/London',
     };
 
     await driver.createReminder(repository, reminder);

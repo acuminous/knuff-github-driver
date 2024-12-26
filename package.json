@@ -42,5 +42,8 @@
   "bugs": {
     "url": "https://github.com/acuminous/knuff-github-driver/issues"
   },
-  "homepage": "https://github.com/acuminous/knuff-github-driver#readme"
+  "homepage": "https://github.com/acuminous/knuff-github-driver#readme",
+  "dependencies": {
+    "luxon": "^3.5.0"
+  }
 }

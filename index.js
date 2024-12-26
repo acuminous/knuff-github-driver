@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export default class GitHubDriver {
 
   #octokit;
@@ -7,12 +9,13 @@ export default class GitHubDriver {
   }
 
   async hasReminder(repository, reminder) {
-    const { owner, name } = repository;
+    const { owner, name: repo } = repository;
+    const labels = this.#getKnuffLabels(reminder);
     const issues = await this.#octokit.issues.listForRepo({
       owner,
-      repo: name,
+      repo,
       state: 'all',
-      labels: this.#getKnuffLabels(reminder),
+      labels,
     });
 
     return issues.data.length > 0;
@@ -20,13 +23,15 @@ export default class GitHubDriver {
 
   async createReminder(repository, reminder) {
     const { owner, name: repo } = repository;
-    const { title, body, labels = [] } = reminder;
+    const { title, body, labels: customLabels = [] } = reminder;
+    const labels = this.#getLabels(customLabels, reminder);
+
     return this.#octokit.issues.create({
       owner,
       repo,
       title,
       body,
-      labels: this.#getLabels(labels, reminder),
+      labels,
     });
   }
 
@@ -37,15 +42,15 @@ export default class GitHubDriver {
   }
 
   #getKnuffLabels(reminder) {
-    return [this.#getKnuffIdLabel(reminder.id), this.#getKnuffDateLabel(reminder.date)];
+    return [this.#getKnuffIdLabel(reminder), this.#getKnuffDateLabel(reminder)];
   }
 
-  #getKnuffIdLabel(id) {
-    return `knuff:${id}`;
+  #getKnuffIdLabel(reminder) {
+    return `knuff:${reminder.id}`;
   }
 
-  #getKnuffDateLabel(date) {
-    return `knuff:${date.toISOString().split('T')[0]}`;
+  #getKnuffDateLabel(reminder) {
+    return `knuff:${DateTime.fromJSDate(reminder.date).setZone(reminder.timezone).toFormat('yyyy-MM-dd')}`;
   }
 
   #validateLabels(labels) {
