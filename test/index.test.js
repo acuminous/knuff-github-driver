@@ -20,7 +20,7 @@ describe('driver', () => {
 
   it('should create issues', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
-    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' }
+    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' };
 
     const { data: issue } = await driver.createReminder(repository, reminder);
 
@@ -29,9 +29,9 @@ describe('driver', () => {
 
   it('should find matching issues', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
-    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' }
+    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' };
 
-    const { data: issue } = await driver.createReminder(repository, reminder);
+    await driver.createReminder(repository, reminder);
 
     const found = await driver.findReminder(repository, reminder);
 
@@ -40,7 +40,7 @@ describe('driver', () => {
 
   it('should not find closed issues', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
-    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' }
+    const reminder = { id: getReminderId(t), title: 'test-issue-1', body: 'the body' };
 
     const { data: issue } = await driver.createReminder(repository, reminder);
     await closeIssue(issue.number);
