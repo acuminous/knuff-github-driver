@@ -85,18 +85,18 @@ describe('driver', () => {
     eq(labels[3], 'l2');
   });
 
-  it('should reject reminders with labels greater than 51 characters', async (t) => {
+  it('should reject reminders with labels greater than 50 characters', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminder = {
       id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
       body: 'the body',
-      labels: ['123456789 123456789 123456789 123456789 123456789 12'],
+      labels: ['123456789 123456789 123456789 123456789 123456789 1'],
       date: new Date('2024-12-25'),
     };
 
     await rejects(() => driver.createReminder(repository, reminder), (error) => {
-      eq(error.message, "Label '123456789 123456789 123456789 123456789 123456789 12' is longer than the GitHub max length of 51 characters");
+      eq(error.message, "Label '123456789 123456789 123456789 123456789 123456789 1' is longer than the GitHub max length of 50 characters");
       return true;
     });
   });
@@ -104,14 +104,14 @@ describe('driver', () => {
   it('should reject reminders with an id greater than 46 characters', async (t) => {
     const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
     const reminder = {
-      id: '123456789 123456789 123456789 123456789 123456',
+      id: '123456789 123456789 123456789 123456789 12345',
       title: t.name,
       body: 'the body',
       date: new Date('2024-12-25'),
     };
 
     await rejects(() => driver.createReminder(repository, reminder), (error) => {
-      eq(error.message, "Label 'knuff:123456789 123456789 123456789 123456789 123456' is longer than the GitHub max length of 51 characters");
+      eq(error.message, "Label 'knuff:123456789 123456789 123456789 123456789 12345' is longer than the GitHub max length of 50 characters");
       return true;
     });
   });

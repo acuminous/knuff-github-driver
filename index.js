@@ -54,8 +54,9 @@ export default class GitHubDriver {
   }
 
   #validateLabels(labels) {
+    const maxLength = 50;
     labels.forEach((label) => {
-      if (label.length > 51) throw new Error(`Label '${label}' is longer than the GitHub max length of 51 characters`);
+      if (label.length > maxLength) throw new Error(`Label '${label}' is longer than the GitHub max length of ${maxLength} characters`);
     });
   }
 }
