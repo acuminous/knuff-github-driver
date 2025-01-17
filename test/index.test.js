@@ -22,7 +22,7 @@ describe('driver', () => {
   it('should create issues with labels', async (t) => {
     const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
-      id: `test1`,
+      id: `test-a`,
       title: t.name,
       body: 'the body',
       labels: ['l1', 'l2'],
