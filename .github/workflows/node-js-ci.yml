@@ -13,18 +13,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: ./demo-label-bug.sh
+      - run: npm ci
+      - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+      - run: chmod +x ./cc-test-reporter
+      - run: ./cc-test-reporter before-build
+      - run: npm run lint
+      - run: npm run coverage
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - run: npm ci
-      # - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-      # - run: chmod +x ./cc-test-reporter
-      # - run: ./cc-test-reporter before-build
-      # - run: npm run lint
-      # - run: npm run coverage
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # - run: ./cc-test-reporter format-coverage -t lcov coverage/lcov.info
-      # - run: ./cc-test-reporter upload-coverage
-      #   env:
-      #     CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+          GITHUB_TOKEN: ${{ secrets.KNUFF_GITHUB_TOKEN }}
+      - run: ./cc-test-reporter format-coverage -t lcov coverage/lcov.info
+      - run: ./cc-test-reporter upload-coverage
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

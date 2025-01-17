@@ -26,9 +26,6 @@ export default class GitHubDriver {
     const { title, body, labels: customLabels = [] } = reminder;
     const labels = this.#getLabels(customLabels, reminder);
 
-    /* eslint-disable-next-line no-console */
-    console.log({ labels });
-
     return this.#octokit.issues.create({
       owner,
       repo: repo || name,

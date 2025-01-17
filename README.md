@@ -37,8 +37,14 @@ The driver adds two labels, `knuff:${reminder.id}` and `knuff:${reminder.date}` 
 | repo  | string | the name of the GitHub repository  |
 
 ### Authentication
+
+#### GitHub Action Token
+**GitHub has removed the permission for the token to create new labels which the driver requires for duplicate detection. Until this is restored, you cannot use a GitHub Action Token. Use one of the other methods instead.**
+
 GitHub provides multiple authentication methods. The most simple is GitHub Action Token authentication. When run from a GitHub Action, the GITHUB_TOKEN environment variable is automatically set, but only permits Knuff to post issues to the repository that houses the action.
 
+#### Personal Access Token
 If you need to post to a different repository, and your usage is still moderate, then a fine grained personal access token with read+write issue permissions is the way to go.
 
+#### GitHub App Installation Token
 If you are using Knuff with lots of teams and repositories, then you may find you are rate limited. In this case your best option is to register a GitHub App and use an installation token, however the token acquisition and refresh process is cumbersome.
