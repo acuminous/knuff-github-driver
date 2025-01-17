@@ -20,7 +20,7 @@ describe('driver', () => {
   });
 
   it('should create issues with labels', async (t) => {
-    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
       id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
@@ -43,7 +43,7 @@ describe('driver', () => {
   });
 
   it('should create issues without labels', async (t) => {
-    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
       id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
@@ -63,7 +63,7 @@ describe('driver', () => {
   });
 
   it('should honour timezones', async (t) => {
-    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
       id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
@@ -86,7 +86,7 @@ describe('driver', () => {
   });
 
   it('should reject reminders with labels greater than 50 characters', async (t) => {
-    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
       id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
@@ -102,7 +102,7 @@ describe('driver', () => {
   });
 
   it('should reject reminders with an id greater than 46 characters', async (t) => {
-    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
       id: '123456789 123456789 123456789 123456789 12345',
       title: t.name,
@@ -117,7 +117,7 @@ describe('driver', () => {
   });
 
   it('should find open issues with the same id and date', async (t) => {
-    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
       id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
@@ -133,7 +133,7 @@ describe('driver', () => {
   });
 
   it('should find closed issues with the same id and date', async (t) => {
-    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
       id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,
@@ -150,7 +150,7 @@ describe('driver', () => {
   });
 
   it('should ignore issues with the same id but different day', async (t) => {
-    const repository = { owner: 'acuminous', name: 'knuff-github-driver' };
+    const repository = { owner: 'acuminous', repo: 'knuff-github-driver' };
     const reminder = {
       id: `test-${crypto.randomBytes(10).toString('hex')}`,
       title: t.name,

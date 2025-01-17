@@ -9,11 +9,11 @@ export default class GitHubDriver {
   }
 
   async hasReminder(repository, reminder) {
-    const { owner, name: repo } = repository;
+    const { owner, name, repo } = repository;
     const labels = this.#getKnuffLabels(reminder);
     const issues = await this.#octokit.issues.listForRepo({
       owner,
-      repo,
+      repo: repo || name,
       state: 'all',
       labels,
     });
@@ -22,13 +22,13 @@ export default class GitHubDriver {
   }
 
   async createReminder(repository, reminder) {
-    const { owner, name: repo } = repository;
+    const { owner, name, repo } = repository;
     const { title, body, labels: customLabels = [] } = reminder;
     const labels = this.#getLabels(customLabels, reminder);
 
     return this.#octokit.issues.create({
       owner,
-      repo,
+      repo: repo || name,
       title,
       body,
       labels,
