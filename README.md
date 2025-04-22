@@ -39,8 +39,6 @@ The driver adds two labels, `knuff:${reminder.id}` and `knuff:${reminder.date}` 
 ### Authentication
 
 #### GitHub Action Token
-**GitHub has removed the permission for the token to create new labels which the driver requires for duplicate detection. Until this is restored, you cannot use a GitHub Action Token. Use one of the other methods instead.**
-
 GitHub provides multiple authentication methods. The most simple is GitHub Action Token authentication. When run from a GitHub Action, the GITHUB_TOKEN environment variable is automatically set, but only permits Knuff to post issues to the repository that houses the action.
 
 #### Personal Access Token
